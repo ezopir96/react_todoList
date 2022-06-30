@@ -1,0 +1,10 @@
+.Header_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6.25rem;
+  color: #eee;
+}
+.Header_title {
+  font-weight: bolder;
+}
