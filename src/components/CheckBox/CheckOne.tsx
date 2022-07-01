@@ -1,6 +1,8 @@
 import Styled from 'styled-components'
 import React from 'react'
 import style from './CheckOne.module.css'
+import actions from '../../store/module/todolist/actions'
+import store from '../../store'
 
 // 给 Sate 定义一个类型
 type StateType = {
@@ -8,7 +10,9 @@ type StateType = {
 }
 
 type PropsType = {
-  $myId: string
+  $myId: string,
+  $index: string,
+  $checked: boolean
 }
 
 // 🔥🔥 类组件 CheckBox 中 state 和 props 的类型, 
@@ -20,28 +24,28 @@ interface CheckBox {
   props: PropsType
 }
 
-interface MyCheck {
-  $myId: string
-}
-
 const CheckLabel: any = Styled.label<any>`
   width: 2.5rem;
-  height: 2.5rem;
+  height: 100%;
   display: inline-block;
-  line-hight: 1.25rem;
-  padding-top: 1.25rem;
 `
 
-class CheckBox extends React.Component {
-  constructor (props: Object) {
-    super(props);
+class CheckBox extends React.Component<any> {
+  handleToggle (e: any) {
+    const id: string = e.target.getAttribute('id')
+
+    if (id === 'selAll') {
+      store.dispatch(actions.changeAll(store.getState().todolist.todos.every((item: any) => {return item.isFinished})))
+    } else {
+      store.dispatch(actions.toggleItem(e.target.checked, id))
+    }
   }
   render () {
-    const { $myId } = this.props;
+    const { $myId, $checked } = this.props;
     return (
       <>
-        <div>
-          <input type="checkbox" id={ $myId } />
+        <div className={style.fbox}>
+          <input checked={ $checked } type="checkbox" id={ $myId } onChange={ this.handleToggle }/>
           <CheckLabel htmlFor={ $myId }><div className={style.showBox}></div></CheckLabel>
         </div>
       </>

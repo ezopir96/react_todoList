@@ -12,7 +12,7 @@ const DelBtn: any = Styled.button<any>`
     background-color: pink;
   }
 `
-class DeleteBtn extends React.Component {
+class DeleteBtn extends React.Component<any> {
   render () {
     return (
       <>

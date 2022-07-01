@@ -5,7 +5,7 @@ import Button from './Buttons'
 import store from '../store'
 import actions from '../store/module/todolist/actions'
 
-const Inputs: any = Styled.input<any>`
+const Inputs = Styled.input<any>`
   width: 25rem;
   height: 3.125rem;
   background-color: #eee;
@@ -17,10 +17,14 @@ const Inputs: any = Styled.input<any>`
 `
 
 class Inputer extends React.Component {
+  state = {
+    todos: store.getState().todolist.todos
+  }
   handleAdd = (e: any) => {
     const content:Element | null = document.querySelector('#inputContent')
-    console.log()
     store.dispatch(actions.createTodoItem(content && (content.tagName === 'INPUT') ? (content as HTMLInputElement).value : ''))
+    console.log(content && (content.tagName === 'INPUT') ? (content as HTMLInputElement).value : '')
+    console.log(this.state.todos)
   }
   constructor (props: Object) {
     super(props)

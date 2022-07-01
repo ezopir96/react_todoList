@@ -8,6 +8,6 @@ const reducer = combineReducers({
   todolist: todolistReducer
 })
 
-const store = createStore(reducer, applyMiddleware(thunk))
+const store: any = createStore(reducer, applyMiddleware(thunk))
 
 export default store

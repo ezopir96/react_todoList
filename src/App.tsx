@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import Inputer from './Tops/Inputer'
 import './App.css';
 
