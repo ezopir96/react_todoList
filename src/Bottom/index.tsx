@@ -25,27 +25,40 @@ const Div: any = Styled.div<any>`
 
 class Bottom extends React.Component {
   state = {
-    todos: store.getState().todolist.todos
+    todos: store.getState().todolist.todos,
+    LENGTH: (store.getState().todolist.todos).length,
+    FINISH_LENGTH : (store.getState().todolist.todos.filter((item: any) => {
+      return item.isFinished
+    })).length
   }
   render () {
-    const { todos } = this.state
+    console.log(this.state.FINISH_LENGTH)
     return (
       <>
       <Div className={ style['bottom-container']}>
-        <CheckBox $myId={'selAll'} key={nanoid()} $index="0" $checked={ todos.every((item: any) => {
-          return !item.isFinished
-        }) }></CheckBox>
-        <p>{todos.every((item: any) => {
-              return !item.isFinished
-            }) + '' }aaaa</p>
+        <CheckBox $myId={'selAll'} key={nanoid()} $index="0" $checked={ (this.state.LENGTH === this.state.FINISH_LENGTH) && (this.state.LENGTH !== 0) }></CheckBox>
         <Stat className={ style.showAll } onClick={(e: any) => {
-          console.log(e)
+          this.setState({
+            todos: store.getState().todolist.todos
+          })
+          console.log(this.state)
         }}>All</Stat>
         <Stat>Done</Stat>
         <Stat>Undone</Stat>
       </Div>
       </>
     )
+  }
+  componentDidMount () {
+    store.subscribe(() => {
+      console.log('changed', store.getState().todolist.todos);
+      this.setState({
+        LENGTH: (store.getState().todolist.todos).length,
+        FINISH_LENGTH: (store.getState().todolist.todos.filter((item: any) => {
+          return item.isFinished
+        })).length
+      })
+    })
   }
 }
 

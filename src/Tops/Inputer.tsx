@@ -22,9 +22,8 @@ class Inputer extends React.Component {
   }
   handleAdd = (e: any) => {
     const content:Element | null = document.querySelector('#inputContent')
-    store.dispatch(actions.createTodoItem(content && (content.tagName === 'INPUT') ? (content as HTMLInputElement).value : ''))
-    console.log(content && (content.tagName === 'INPUT') ? (content as HTMLInputElement).value : '')
-    console.log(this.state.todos)
+    store.dispatch(actions.createTodoItem(content && (content.tagName === 'INPUT') ? (content as HTMLInputElement).value : ''));
+    if (content && (content.tagName === 'INPUT')) (content as HTMLInputElement).value = ''
   }
   constructor (props: Object) {
     super(props)
