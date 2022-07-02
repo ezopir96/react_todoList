@@ -8,7 +8,7 @@ const initialState = {
 
 const reducer = (prevState = initialState, action: any) => {
   if (!action.type.startsWith('todolist/')) return prevState
-  console.log('actions pass | ', action)
+  // console.log('actions pass | ', action)
   const state: any = _.cloneDeep(prevState)
   switch (action.type) {
     case CREATE_TODOITEM_TYPE:
@@ -25,6 +25,11 @@ const reducer = (prevState = initialState, action: any) => {
       state.todos.forEach((item: any) => {
         item.isFinished = !action.payload
       })
+      break;
+    case DELETE_TODOITEM_TYPE:
+      state.todos = _.cloneDeep(prevState.todos.filter((item: any) => {
+        return item.id !== action.payload
+      }))
       break;
     default:
       break;

@@ -4,6 +4,7 @@ import './List.css'
 import CheckBox from '../components/CheckBox/CheckOne'
 import DeleteBtn from './DeleteBtn'
 import store from '../store'
+import EventBus from '../hooks/bus'
 
 const TodoLi: any = Styled.li<any>`
   height: 3.125rem;
@@ -26,6 +27,12 @@ const Contents: any = Styled.p<any>`
 
 
 class List extends React.Component<any> {
+
+  constructor (props: any) {
+    super(props);
+    this.handleChangeShow = this.handleChangeShow.bind(this)
+  }
+
   state = {
     todos: store.getState().todolist.todos
   }
@@ -34,6 +41,17 @@ class List extends React.Component<any> {
 
   handleDelete () {
     console.log('删除')
+  }
+  handleChangeShow (type: string) {
+    // 事件总线触发事件的处理函数 ⚡⚡⚡
+    if (type === 'all') this.setState({
+      todos: store.getState().todolist.todos
+    })
+    else this.setState({
+      todos: store.getState().todolist.todos.filter((item: any) => {
+        return type === 'finished' ? item.isFinished : !item.isFinished
+      })
+    })
   }
 
   render () {
@@ -50,7 +68,7 @@ class List extends React.Component<any> {
               $checked={ item.isFinished }
             ></CheckBox>
             <Contents state={ item.isFinished } className="list-content">{ item.content }</Contents>
-            <DeleteBtn onClick={ this.handleDelete }></DeleteBtn>
+            <DeleteBtn onClick={ this.handleDelete } $btnId={ item.id }></DeleteBtn>
             </TodoLi>
           })
         }
@@ -61,6 +79,10 @@ class List extends React.Component<any> {
     this.clear = store.subscribe(() => {
       this.setState({ todos: store.getState().todolist.todos })
     })
+
+    // 绑定事件总线处理函数
+    EventBus.on('change-show', this.handleChangeShow)
+
   }
   componentWillUnmount () {
     this.clear()
