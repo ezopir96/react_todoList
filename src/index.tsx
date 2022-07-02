@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import Header from './Header';
 import reportWebVitals from './reportWebVitals';
 import List from './List/List'
 import Bottom from './Bottom'
+import Inputer from './Tops/Inputer'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Header />
-    <App />
+    <Inputer />
     <List />
     <Bottom />
   </React.StrictMode>

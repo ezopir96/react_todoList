@@ -12,6 +12,7 @@ height: 3.125rem;
 &:active {
   background-color: #666;
 }
+box-sizing: border-box;
 `
 
 

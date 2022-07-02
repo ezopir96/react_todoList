@@ -4,7 +4,6 @@ import CheckBox from '../components/CheckBox/CheckOne'
 import style from './index.module.css'
 import store from '../store'
 import { nanoid } from 'nanoid'
-import { bind } from "lodash";
 import EventBus from "../hooks/bus";
 
 const Stat: any = Styled.button<any>`
@@ -26,12 +25,6 @@ const Div: any = Styled.div<any>`
 
 
 class Bottom extends React.Component {
-  constructor (props: any) {
-    super(props)
-    // 需要绑定构造函数的 this 💧💧💧
-    // 也可以在组件标签内调用处理事件函数的地方直接使用bind, 这样的好处是方便传递其他参数 🔥🔥🔥
-    // this.handleChangeShow = this.handleChangeShow.bind(this)
-  }
   state = {
     LENGTH: (store.getState().todolist.todos).length,
     FINISH_LENGTH : (store.getState().todolist.todos.filter((item: any) => {
